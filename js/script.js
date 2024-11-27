@@ -19,7 +19,7 @@ function fetchWeatherData(location) {
 
     promise
         .then((data) => {
-            console.log(data)
+            console.log(data);
 
             // HERO
             const dateVar = new Date(data.forecast.forecastday[0].date);
@@ -35,7 +35,6 @@ function fetchWeatherData(location) {
             document.getElementById('weatherHeroAtmosphere').textContent = data.current.condition.text;
             document.getElementById('weatherHeroImage').src = "ico/" + fileName + ".svg";
 
-            
             //FORECAST ONE
             const dateOneVar = new Date(data.forecast.forecastday[1].date);
             const dayOneVar = dateOneVar.toLocaleDateString(undefined, { weekday: 'long' });
@@ -48,7 +47,6 @@ function fetchWeatherData(location) {
             document.getElementById('weatherOneAtmosphere').textContent = data.forecast.forecastday[1].day.condition.text;
             document.getElementById('weatherOneTemp').textContent = data.forecast.forecastday[1].day.avgtemp_c+"°C";
             document.getElementById('weatherOneImage').src = "ico/" + fileNameOne + ".svg";
-
 
             //FORECAST TWO
             const dateTwoVar = new Date(data.forecast.forecastday[2].date);
@@ -67,7 +65,7 @@ function fetchWeatherData(location) {
             const countryVar = document.getElementById('weatherInput');
             countryVar.placeholder = data.location.name;
             countryVar.addEventListener('click', () => {
-              countryVar.value=""
+              countryVar.value="";
           });
         })
         .catch((error) => {
@@ -75,56 +73,36 @@ function fetchWeatherData(location) {
         });
 }
 
-  // Add event listener to the input field
-  const countryVar = document.getElementById('weatherInput');
-  
-  countryVar.addEventListener('input', () => {
-      const valueInputWeather = countryVar.value.trim(); // Get the input value and trim whitespace
-      if (valueInputWeather) {
-          console.log("Fetching data for:", valueInputWeather);
-          fetchWeatherData(valueInputWeather); // Fetch weather data for the entered location
-      }
-  });
-
-// Initial fetch for the default location
-fetchWeatherData('Brussels');
-
-
-
-// PERPLEXITY
-let deferredPrompt;
-const installButton = document.createElement('button');
-installButton.style.display = 'none';
-installButton.textContent = 'Installer l\'application';
-
-// Détection si l'installation est possible
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // Vérification de la plateforme
-    if (/iPhone|iPad|iPod/.test(navigator.platform)) {
-        installButton.textContent = 'Installation non disponible sur iOS';
-        installButton.disabled = true;
+// Get the user's location
+function fetchUserLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                const location = `${lat},${lon}`; // Format for WeatherAPI
+                fetchWeatherData(location); // Fetch weather data for the user's location
+            },
+            (error) => {
+                console.error('Geolocation error:', error);
+                fetchWeatherData('Brussels'); // Fallback to Brussels if geolocation fails
+            }
+        );
     } else {
-        installButton.style.display = 'block';
+        console.error('Geolocation is not supported by this browser.');
+        fetchWeatherData('Brussels'); // Fallback to Brussels if geolocation is unavailable
     }
-    
-    document.body.appendChild(installButton);
+}
+
+// Add event listener to the input field
+const countryVar = document.getElementById('weatherInput');
+countryVar.addEventListener('input', () => {
+    const valueInputWeather = countryVar.value.trim(); // Get the input value and trim whitespace
+    if (valueInputWeather) {
+        console.log("Fetching data for:", valueInputWeather);
+        fetchWeatherData(valueInputWeather); // Fetch weather data for the entered location
+    }
 });
 
-// Gestion du clic sur le bouton d'installation
-installButton.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    
-    const result = await deferredPrompt.prompt();
-    console.log(`Installation ${result.outcome}`);
-    deferredPrompt = null;
-    installButton.style.display = 'none';
-});
-
-// Détection si l'app est déjà installée
-window.addEventListener('appinstalled', () => {
-    deferredPrompt = null;
-    installButton.style.display = 'none';
-});
+// Initial fetch based on user's location or fallback
+fetchUserLocation();
