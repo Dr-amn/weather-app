@@ -106,3 +106,42 @@ countryVar.addEventListener('input', () => {
 
 // Initial fetch based on user's location or fallback
 fetchUserLocation();
+
+
+// Gestion de l'installation de l'application
+let deferredPrompt;
+const installButton = document.createElement('button');
+installButton.style.display = 'none';
+installButton.textContent = 'Installer l\'application';
+
+// Détection si l'installation est possible
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Vérification de la plateforme
+    if (/iPhone|iPad|iPod/.test(navigator.platform)) {
+        installButton.textContent = 'Installation non disponible sur iOS';
+        installButton.disabled = true;
+    } else {
+        installButton.style.display = 'block';
+    }
+    
+    document.body.appendChild(installButton);
+});
+
+// Gestion du clic sur le bouton d'installation
+installButton.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    
+    const result = await deferredPrompt.prompt();
+    console.log(`Installation ${result.outcome}`);
+    deferredPrompt = null;
+    installButton.style.display = 'none';
+});
+
+// Détection si l'app est déjà installée
+window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    installButton.style.display = 'none';
+});
