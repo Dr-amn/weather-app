@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    @apply text-white font-lato;
+}
+.cardWeather {
+    @apply w-[90%] h-[40%] bg-neutral-800 flex rounded-3xl p-[2vh];
+}
+.ahun {
+    @apply font-bold;
+}
+#weatherInput::placeholder{
+    color: dimgray;
+}

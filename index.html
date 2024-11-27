@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="MonPWA">
+    <link rel="apple-touch-icon" href="/icones-pwa/icon-192x192.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Weather-app</title>
+    <link rel="manifest" href="/manifest.json">
+
+</head>
+    <body class="h-screen w-full bg-neutral-900 flex flex-col items-center justify-center gap-y-[5vh]">
+        <div class="cardWeather flex flex-col justify-between">
+            <input id="weatherInput" class="w-7/12 h-[6vh] bg-neutral-700 placeholder:text-white text-white text-sm rounded-2xl px-3 py-2 shadow-sm focus:outline-none focus:border-none focus:shadow" placeholder="">
+            <div class="w-full h-full flex">
+                <div class="w-4/12 h-full">
+                    <h1 id="weatherHeroDay" class="ahun pt-[2vh] text-2xl"></h1>
+                    <h2 id="weatherHeroDate"></h2>
+                </div>
+                <div class="w-4/12 h-full flex align-middle justify-center">
+                    <img id="weatherHeroImage" class="object-contain w-11/12 h-auto" src="ico/176.svg" alt="">
+                </div>
+                <div class="w-4/12 h-full flex flex-col justify-end">
+                    <h1 id="weatherHeroTemp" class="ahun text-4xl self-end"></h1>
+                    <p id="weatherHeroAtmosphere" class=" self-end"></p>
+                </div>
+            </div>
+        </div>
+        <div class="cardWeather flex flex-col gap-[2vh]">
+                <h2 class="text-xl ">Jours suivants</h2>
+
+            <div class="w-12/12 h-[35%] p-3 bg-neutral-700 rounded-2xl flex">
+                <div class="w-5/12 h-full flex flex-col justify-center">
+                    <h2 id="weatherOneDay" class="text-xl"></h2>
+                    <p id="weatherOneAtmosphere" class="text-sm">Pluie</p>
+                </div>
+                <div class="w-3/12 h-full">
+                    <img id="weatherOneImage" src="" alt="">
+                </div>
+                <div class="w-5/12 h-full flex flex-col justify-center text-end">
+                    <h1 id="weatherOneTemp" class="text-2xl font-bold"></h1>
+                </div>
+            </div>
+
+            <div class="w-12/12 h-[35%] p-3 bg-neutral-700 rounded-2xl flex">
+                <div class="w-5/12 h-full flex flex-col justify-center">
+                    <h2 id="weatherTwoDay" class="text-xl">Jeudi</h2>
+                    <p id="weatherTwoAtmosphere" class="text-sm">Pluie</p>
+                </div>
+                <div class="w-3/12 h-full">
+                    <img id="weatherTwoImage" src="ico/176.svg" alt="">
+                </div>
+                <div class="w-5/12 h-full flex flex-col justify-center text-end">
+                    <h1 id="weatherTwoTemp" class="text-2xl font-bold">14°C</h1>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/js/sw.js')
+              .then(registration => {
+                console.log('ServiceWorker enregistré avec succès:', registration.scope);
+              })
+              .catch(error => {
+                console.log('Échec de l\'enregistrement du ServiceWorker:', error);
+              });
+          });
+        }
+      </script>
+    <script src="/js/script.js"></script>
+</html>
