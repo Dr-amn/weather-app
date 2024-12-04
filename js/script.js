@@ -157,28 +157,3 @@ window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     installButton.style.display = 'none';
 });
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); // Prevent the default prompt
-    deferredPrompt = e;
-
-    // Enhanced device detection
-    const isAppleDevice =
-        /iPhone|iPad|iPod|Mac/.test(navigator.platform) || 
-        /Macintosh|iPhone|iPad|iPod/.test(navigator.userAgent);
-
-    console.log("Platform:", navigator.platform);
-    console.log("User Agent:", navigator.userAgent);
-
-    if (isAppleDevice) {
-        console.log("You are using an Apple device.");
-        installButton.disabled = true; // Disable the install button for Apple devices
-        popup.style.display = 'flex'; // Show the popup for Apple devices
-    } else {
-        console.log("You are not using an Apple device.");
-        installButton.style.display = 'flex'; // Enable the install button for other devices
-    }
-
-    // Add the install button to the DOM
-    document.body.appendChild(installButton);
-});
