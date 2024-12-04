@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', () => {
+
 var placeholder = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
 
 function fetchWeatherData(location) {
@@ -159,4 +161,6 @@ installButton.addEventListener('click', async () => {
 window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     installButton.style.display = 'none';
+});
+
 });
