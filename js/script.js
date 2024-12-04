@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-var placeholder = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
-
 function fetchWeatherData(location) {
     let promise = new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
