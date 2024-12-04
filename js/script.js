@@ -129,10 +129,12 @@ window.addEventListener('beforeinstallprompt', (e) => {
     deferredPrompt = e;
     
     // Vérification de la plateforme
-    if (/iPhone|iPad|iPod/.test(navigator.platform)) {
+    if (/iPhone|iPad|iPod|Mac/.test(navigator.platform)) {
+        console.log("You are using an Apple device.");
         installButton.disabled = true;
         popup.style.display = 'flex';
     } else {
+        console.log("You are not using an Apple device.");
         installButton.style.display = 'flex';
         popup.disabled = true;
     }
