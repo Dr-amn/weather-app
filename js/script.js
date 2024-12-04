@@ -45,7 +45,7 @@ function fetchWeatherData(location) {
 
             document.getElementById('weatherOneDay').textContent = dayOneVar;
             document.getElementById('weatherOneAtmosphere').textContent = data.forecast.forecastday[1].day.condition.text;
-            document.getElementById('weatherOneTemp').textContent = data.forecast.forecastday[1].day.avgtemp_c + "°C";
+            document.getElementById('weatherOneTemp').textContent = data.forecast.forecastday[1].day.avgtemp_c+"°C";
             document.getElementById('weatherOneImage').src = "ico/" + fileNameOne + ".svg";
 
             //FORECAST TWO
@@ -58,15 +58,15 @@ function fetchWeatherData(location) {
 
             document.getElementById('weatherTwoDay').textContent = dayTwoVar;
             document.getElementById('weatherTwoAtmosphere').textContent = data.forecast.forecastday[2].day.condition.text;
-            document.getElementById('weatherTwoTemp').textContent = data.forecast.forecastday[2].day.avgtemp_c + "°C";
+            document.getElementById('weatherTwoTemp').textContent = data.forecast.forecastday[2].day.avgtemp_c+"°C";
             document.getElementById('weatherTwoImage').src = "ico/" + fileNameTwo + ".svg";
 
             // Update the input placeholder to show the country
             const countryVar = document.getElementById('weatherInput');
             countryVar.placeholder = data.location.name;
             countryVar.addEventListener('click', () => {
-                countryVar.value = "";
-            });
+              countryVar.value="";
+          });
         })
         .catch((error) => {
             console.error(error);
@@ -107,74 +107,41 @@ countryVar.addEventListener('input', () => {
 // Initial fetch based on user's location or fallback
 fetchUserLocation();
 
+
 // Gestion de l'installation de l'application
-document.addEventListener('DOMContentLoaded', () => {
-    let deferredPrompt;
-    const installButton = document.createElement('button');
-    installButton.textContent = 'Installer l\'application';
-    document.body.appendChild(installButton);
+let deferredPrompt;
+const installButton = document.createElement('button');
+installButton.style.display = 'none';
+installButton.textContent = 'Installer l\'application';
 
-    // Create the pop-up
-    const popup = document.createElement('div');
-    popup.id = 'ios-popup';
-    popup.style.display = 'none';
-    popup.style.position = 'fixed';
-    popup.style.top = '50%';
-    popup.style.left = '50%';
-    popup.style.transform = 'translate(-50%, -50%)';
-    popup.style.backgroundColor = '#fff';
-    popup.style.padding = '20px';
-    popup.style.borderRadius = '8px';
-    popup.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-    popup.style.zIndex = '1000';
-
-    // Pop-up content
-    popup.innerHTML = `
-        <p>Pour installer cette application sur un appareil Apple, suivez les étapes :</p>
-        <ol>
-            <li>Ouvrez ce site dans Safari.</li>
-            <li>Appuyez sur l'icône de partage en bas de l'écran.</li>
-            <li>Sélectionnez "Ajouter à l'écran d'accueil".</li>
-        </ol>
-        <button id="close-popup" style="margin-top: 10px;">Fermer</button>
-    `;
-    document.body.appendChild(popup);
-
-    // Close button for the pop-up
-    document.getElementById('close-popup').addEventListener('click', () => {
-        popup.style.display = 'none';
-    });
-
-    // Check if the user is on Safari or an Apple device
-    const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-    const isAppleDevice = /iPhone|iPad|iPod/.test(navigator.platform);
-
-    // Handle installation
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-
-        if (isSafari && isAppleDevice) {
-            // For Apple devices on Safari, show the pop-up
-            installButton.addEventListener('click', () => {
-                popup.style.display = 'block';
-            });
-        } else {
-            // For non-Apple devices, show the installation prompt
-            installButton.addEventListener('click', async () => {
-                if (!deferredPrompt) return;
-                const result = await deferredPrompt.prompt();
-                console.log(`Installation ${result.outcome}`);
-                deferredPrompt = null;
-            });
-        }
-
+// Détection si l'installation est possible
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Vérification de la plateforme
+    if (/iPhone|iPad|iPod/.test(navigator.platform)) {
+        installButton.textContent = 'Installation non disponible sur iOS';
+        installButton.disabled = true;
+    } else {
         installButton.style.display = 'block';
-    });
+    }
+    
+    document.body.appendChild(installButton);
+});
 
-    // Detect if the app is already installed
-    window.addEventListener('appinstalled', () => {
-        deferredPrompt = null;
-        installButton.style.display = 'none';
-    });
+// Gestion du clic sur le bouton d'installation
+installButton.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    
+    const result = await deferredPrompt.prompt();
+    console.log(`Installation ${result.outcome}`);
+    deferredPrompt = null;
+    installButton.style.display = 'none';
+});
+
+// Détection si l'app est déjà installée
+window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    installButton.style.display = 'none';
 });
