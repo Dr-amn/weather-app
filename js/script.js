@@ -110,9 +110,18 @@ fetchUserLocation();
 
 // Gestion de l'installation de l'application
 let deferredPrompt;
-const installButton = document.createElement('button');
+const installButton = document.getElementById('installButton')
 installButton.style.display = 'none';
 installButton.textContent = 'Installer l\'application';
+
+const popup = document.getElementById('pop-up');
+popup.style.display = 'none';
+
+const closepopup = document.getElementById('pop-up-close');
+
+closepopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+});
 
 // Détection si l'installation est possible
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -121,10 +130,11 @@ window.addEventListener('beforeinstallprompt', (e) => {
     
     // Vérification de la plateforme
     if (/iPhone|iPad|iPod/.test(navigator.platform)) {
-        installButton.textContent = 'Installation non disponible sur iOS';
         installButton.disabled = true;
+        popup.style.display = 'flex';
     } else {
-        installButton.style.display = 'block';
+        installButton.style.display = 'flex';
+        popup.disabled = true;
     }
     
     document.body.appendChild(installButton);
