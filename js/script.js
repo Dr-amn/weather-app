@@ -1,4 +1,4 @@
-var placeholder = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
+document.addEventListener('DOMContentLoaded', () => {
 
 function fetchWeatherData(location) {
     let promise = new Promise((resolve, reject) => {
@@ -108,26 +108,22 @@ countryVar.addEventListener('input', () => {
 fetchUserLocation();
 
 
-// Gestion de l'installation de l'application
+
 let deferredPrompt;
-const installButton = document.createElement('button');
+const installButton = document.getElementById('installButton')
 installButton.style.display = 'none';
-installButton.textContent = 'Installer l\'application';
+
+const appleInstallButton = document.getElementById('appleInstallButton')
+appleInstallButton.style.display = 'none';
 
 // Détection si l'installation est possible
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
-    // Vérification de la plateforme
-    if (/iPhone|iPad|iPod/.test(navigator.platform)) {
-        installButton.textContent = 'Installation non disponible sur iOS';
-        installButton.disabled = true;
-    } else {
-        installButton.style.display = 'block';
-    }
+    installButton.style.display = 'flex';
+    appleInstallButton.style.display = 'flex';
     
-    document.body.appendChild(installButton);
 });
 
 // Gestion du clic sur le bouton d'installation
@@ -144,4 +140,29 @@ installButton.addEventListener('click', async () => {
 window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     installButton.style.display = 'none';
+});
+
+
+// POPUP EVENT
+const popup = document.getElementById('popup');
+popup.style.display = 'none';
+
+appleInstallButton.addEventListener('click', () => {
+    popup.style.display = 'flex';
+});
+
+const popupClose = document.getElementById('popupClose');
+
+popupClose.addEventListener('click', () => {
+    popup.style.display = 'none';
+});
+
+const popupDone = document.getElementById('popupDone');
+
+popupDone.addEventListener('click', () => {
+    popup.style.display = 'none';
+});
+
+
+// DOM LOADER END
 });

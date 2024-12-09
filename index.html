@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="cardWeather flex flex-col gap-[2vh]">
-                <h2 class="text-xl ">Jours suivants</h2>
+                <h2 class="text-xl ">Days to come</h2>
 
             <div class="w-12/12 h-[35%] p-3 bg-neutral-700 rounded-2xl flex">
                 <div class="w-5/12 h-full flex flex-col justify-center">
@@ -60,8 +60,45 @@
             </div>
 
         </div>
+
+            <!-- eClick BUTTONS -->
+            <div class=" w-4/5 flex justify-between">
+                <button class="bg-green-600 w-2/5 flex justify-center p-2 rounded-md" id="installButton">Install</button>
+                <button class="bg-blue-600 w-2/5 flex justify-center p-2 rounded-md" id="appleInstallButton">Apple Install</button>
+            </div>
+
+        <!-- POPUP -->
+        <section id="popup" class="w-screen h-screen absolute top-0 left-0 items-center justify-center">
+            <div class="w-10/12 h-[90%] bg-neutral-900 rounded-t-[7.5vw]">
+
+                <div class="flex w-full mb-4 h-10 justify-end">
+                    <img id="popupClose" class="mt-4 mr-4 h-full aspect-square p-1 border-white border-2 rounded-full" src="img/close.png" alt="">
+                </div>
+
+                <div class="flex flex-col overflow-y-scroll items-center">
+                    <h1 class="text-2xl mt-4 text-red-600 font-bold">Step 1</h1>
+                    <img class="w-9/12 h-3/4 object-cover mb-4 border-[1px] border-red-600 rounded-[7.5vw]" src="img/iphone-01.jpg" alt="">
+
+                    <h1 class="text-2xl mt-4 text-red-600 font-bold">Step 2</h1>
+                    <img class="w-9/12 h-3/4 object-cover mb-4 border-[1px] border-red-600 rounded-[7.5vw]" src="img/iphone-02.jpg" alt="">
+
+                    <h1 class="text-2xl mt-4 text-red-600 font-bold">Step 3</h1>
+                    <img class="w-9/12 h-3/4 object-cover mb-4 border-[1px] border-red-600 rounded-[7.5vw]" src="img/iphone-03.jpg" alt="">
+
+                    <div id="popupDone" class="bg-blue-600 w-2/5 flex justify-center p-2 rounded-md mb-4" >DONE</div>
+                </div>
+            </div>
+        </section>
     </body>
 
+
+
+
+
+
+
+
+    <!-- SCRIPTS -->
     <script>
         if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
@@ -75,5 +112,5 @@
           });
         }
       </script>
-    <script src="/js/script.js"></script>
+    <script src="/js/script.js" defer></script>
 </html>
