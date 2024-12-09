@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="MonPWA">
     <link rel="apple-touch-icon" href="/icones-pwa/icon-192x192.png">
@@ -60,21 +60,33 @@
             </div>
 
         </div>
-        <button id="installButton" class="absolute bottom-8 p-4 bg-yellow-600 rounded-3xl"></button>
 
-        <section id="pop-up" class="w-10/12 h-5/6 absolute bg-black rounded-[4.5vh] z-3">
-            <div class="w-full flex h-12 justify-end items-start mb-6">
-                <img id="pop-up-close" class="h-full aspect-square border-2 border-white p-2 rounded-full mr-3 mt-3" src="img/close.png" alt="">
+            <!-- eClick BUTTONS -->
+            <div class=" w-4/5 flex justify-between">
+                <button class="bg-green-600 w-2/5 flex justify-center p-2 rounded-md" id="installButton">Install</button>
+                <button class="bg-blue-600 w-2/5 flex justify-center p-2 rounded-md" id="appleInstallButton">Apple Install</button>
             </div>
-            <div class="overflow-y-scroll flex flex-col items-center">
-                <h1 class="text-3xl mb-2 text-red-600 font-semibold">Step 1</h1>
-                <img class="w-11/12 mb-6 rounded-[4.5vh]" src="img/apple-01.jpg" alt="">
 
-                <h1 class="text-3xl mb-2 text-red-600 font-semibold">Step 2</h1>
-                <img class="w-11/12 mb-6 rounded-[4.5vh]" src="img/apple-02.jpg" alt="">
+        <!-- POPUP -->
+        <section id="popup" class="w-screen h-screen absolute top-0 left-0 items-center justify-center">
+            <div class="w-10/12 h-[90%] bg-neutral-900 rounded-t-[7.5vw]">
 
-                <h1 class="text-3xl mb-2 text-red-600 font-semibold">Step 3</h1>
-                <img class="w-11/12 mb-6 rounded-[4.5vh]" src="img/apple-03.jpg" alt="">
+                <div class="flex w-full mb-4 h-10 justify-end">
+                    <img id="popupClose" class="mt-4 mr-4 h-full aspect-square p-1 border-white border-2 rounded-full" src="img/close.png" alt="">
+                </div>
+
+                <div class="flex flex-col overflow-y-scroll items-center">
+                    <h1 class="text-2xl mt-4 text-red-600 font-bold">Step 1</h1>
+                    <img class="w-9/12 h-3/4 object-cover mb-4 border-[1px] border-red-600 rounded-[7.5vw]" src="img/iphone-01.jpg" alt="">
+
+                    <h1 class="text-2xl mt-4 text-red-600 font-bold">Step 2</h1>
+                    <img class="w-9/12 h-3/4 object-cover mb-4 border-[1px] border-red-600 rounded-[7.5vw]" src="img/iphone-02.jpg" alt="">
+
+                    <h1 class="text-2xl mt-4 text-red-600 font-bold">Step 3</h1>
+                    <img class="w-9/12 h-3/4 object-cover mb-4 border-[1px] border-red-600 rounded-[7.5vw]" src="img/iphone-03.jpg" alt="">
+
+                    <div id="popupDone" class="bg-blue-600 w-2/5 flex justify-center p-2 rounded-md mb-4" >DONE</div>
+                </div>
             </div>
         </section>
     </body>
