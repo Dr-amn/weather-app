@@ -164,5 +164,30 @@ popupDone.addEventListener('click', () => {
 });
 
 
+const md = new MobileDetect(window.navigator.userAgent);
+ 
+  // Comprehensive device check
+  function handleMobileDevice() {
+    if (md.mobile()) {
+     alert('Mobile device detected');
+     
+      if (md.is('iOS')) {
+       alert('iOS device');
+        // iOS-specific logic
+      } else if (md.is('AndroidOS')) {
+       alert('Android device');
+        // Android-specific logic
+      }
+     
+      if (md.tablet()) {
+       alert('This is a tablet');
+      } else if (md.phone()) {
+       alert('This is a phone');
+      }
+    }
+  }
+ 
+  handleMobileDevice();
+
 // DOM LOADER END
 });
