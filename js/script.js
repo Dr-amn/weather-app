@@ -112,37 +112,34 @@ fetchUserLocation();
 let deferredPrompt;
 const installButton = document.getElementById('installButton')
 installButton.style.display = 'none';
-installButton.textContent = 'Installer l\'application';
 
-const popup = document.getElementById('pop-up');
-popup.style.display = 'none';
+const appleInstallButton = document.getElementById('appleInstallButton')
+appleInstallButton.style.display = 'none';
 
-const closepopup = document.getElementById('pop-up-close');
-
-closepopup.addEventListener('click', () => {
-    popup.style.display = 'none';
-});
+const md = new MobileDetect(window.navigator.userAgent);
 
 // Détection si l'installation est possible
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    
-    // Vérification de la plateforme
-    const isAppleDevice = /iPhone|iPad|iPod|Mac/.test(navigator.userAgent);
 
-    if (isAppleDevice) {
-        console.log("You are using an Apple device.");
-        installButton.disabled = true;
-        popup.style.display = 'flex';
-    } else {
-        console.log("You are not using an Apple device.");
+  // Comprehensive device check
+  function handleMobileDevice() {
+    if (md.mobile()) {     
+      if (md.is('iOS')) {
+        //alert('iOS device');
+       appleInstallButton.style.display = 'flex';
+
+      } else if (md.is('AndroidOS')) {
+        //alert('Android device');
         installButton.style.display = 'flex';
-        popup.disabled = true;
+
+      }
     }
-    
-    
-    document.body.appendChild(installButton);
+  }
+ 
+  handleMobileDevice();
+        
 });
 
 // Gestion du clic sur le bouton d'installation
@@ -159,6 +156,32 @@ installButton.addEventListener('click', async () => {
 window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     installButton.style.display = 'none';
+    appleInstallButton.style.display = 'none';
 });
 
+
+// POPUP EVENT
+const popup = document.getElementById('popup');
+popup.style.display = 'none';
+
+appleInstallButton.addEventListener('click', () => {
+    popup.style.display = 'flex';
+});
+
+const popupClose = document.getElementById('popupClose');
+
+popupClose.addEventListener('click', () => {
+    popup.style.display = 'none';
+});
+
+const popupDone = document.getElementById('popupDone');
+
+popupDone.addEventListener('click', () => {
+    popup.style.display = 'none';
+    appleInstallButton.style.display = 'none';
+
+});
+
+
+// DOM LOADER END
 });

@@ -16,3 +16,6 @@ html {
 #weatherInput::placeholder{
     color: dimgray;
 }
+#popup{
+    display: none;
+}
