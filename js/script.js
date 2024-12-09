@@ -116,14 +116,30 @@ installButton.style.display = 'none';
 const appleInstallButton = document.getElementById('appleInstallButton')
 appleInstallButton.style.display = 'none';
 
+const md = new MobileDetect(window.navigator.userAgent);
+
 // Détection si l'installation est possible
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    
-    installButton.style.display = 'flex';
-    appleInstallButton.style.display = 'flex';
-    
+
+  // Comprehensive device check
+  function handleMobileDevice() {
+    if (md.mobile()) {     
+      if (md.is('iOS')) {
+        //alert('iOS device');
+       appleInstallButton.style.display = 'flex';
+
+      } else if (md.is('AndroidOS')) {
+        //alert('Android device');
+        installButton.style.display = 'flex';
+
+      }
+    }
+  }
+ 
+  handleMobileDevice();
+        
 });
 
 // Gestion du clic sur le bouton d'installation
@@ -140,6 +156,7 @@ installButton.addEventListener('click', async () => {
 window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     installButton.style.display = 'none';
+    appleInstallButton.style.display = 'none';
 });
 
 
@@ -161,33 +178,10 @@ const popupDone = document.getElementById('popupDone');
 
 popupDone.addEventListener('click', () => {
     popup.style.display = 'none';
+    appleInstallButton.style.display = 'none';
+
 });
 
-
-const md = new MobileDetect(window.navigator.userAgent);
- 
-  // Comprehensive device check
-  function handleMobileDevice() {
-    if (md.mobile()) {
-     alert('Mobile device detected');
-     
-      if (md.is('iOS')) {
-       alert('iOS device');
-        // iOS-specific logic
-      } else if (md.is('AndroidOS')) {
-       alert('Android device');
-        // Android-specific logic
-      }
-     
-      if (md.tablet()) {
-       alert('This is a tablet');
-      } else if (md.phone()) {
-       alert('This is a phone');
-      }
-    }
-  }
- 
-  handleMobileDevice();
 
 // DOM LOADER END
 });
