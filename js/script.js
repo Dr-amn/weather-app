@@ -112,18 +112,37 @@ fetchUserLocation();
 let deferredPrompt;
 const installButton = document.getElementById('installButton')
 installButton.style.display = 'none';
+installButton.textContent = 'Installer l\'application';
 
-const appleInstallButton = document.getElementById('appleInstallButton')
-appleInstallButton.style.display = 'none';
+const popup = document.getElementById('pop-up');
+popup.style.display = 'none';
+
+const closepopup = document.getElementById('pop-up-close');
+
+closepopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+});
 
 // Détection si l'installation est possible
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
-    installButton.style.display = 'flex';
-    appleInstallButton.style.display = 'flex';
+    // Vérification de la plateforme
+    const isAppleDevice = /iPhone|iPad|iPod|Mac/.test(navigator.userAgent);
+
+    if (isAppleDevice) {
+        console.log("You are using an Apple device.");
+        installButton.disabled = true;
+        popup.style.display = 'flex';
+    } else {
+        console.log("You are not using an Apple device.");
+        installButton.style.display = 'flex';
+        popup.disabled = true;
+    }
     
+    
+    document.body.appendChild(installButton);
 });
 
 // Gestion du clic sur le bouton d'installation
@@ -142,27 +161,4 @@ window.addEventListener('appinstalled', () => {
     installButton.style.display = 'none';
 });
 
-
-// POPUP EVENT
-const popup = document.getElementById('popup');
-popup.style.display = 'none';
-
-appleInstallButton.addEventListener('click', () => {
-    popup.style.display = 'flex';
-});
-
-const popupClose = document.getElementById('popupClose');
-
-popupClose.addEventListener('click', () => {
-    popup.style.display = 'none';
-});
-
-const popupDone = document.getElementById('popupDone');
-
-popupDone.addEventListener('click', () => {
-    popup.style.display = 'none';
-});
-
-
-// DOM LOADER END
 });
